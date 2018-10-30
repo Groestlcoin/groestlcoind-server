@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Node;
+namespace BitWasp\Groestlcoind\Node;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Config\Loader as ConfigLoader;
-use BitWasp\Bitcoind\Exception\ServerException;
-use BitWasp\Bitcoind\HttpDriver\CurlDriver;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\Loader as ConfigLoader;
+use BitWasp\Groestlcoind\Exception\ServerException;
+use BitWasp\Groestlcoind\HttpDriver\CurlDriver;
 use Nbobtc\Command\Command;
 use Nbobtc\Http\Client;
 use Nbobtc\Http\Driver\DriverInterface;
@@ -87,7 +87,7 @@ class Server
             }
 
             if (microtime(true) > $start + $limit) {
-                throw new \RuntimeException("Timeout elapsed, never made connection to bitcoind");
+                throw new \RuntimeException("Timeout elapsed, never made connection to groestlcoind");
             }
         } while (!$connected);
 
@@ -117,17 +117,17 @@ class Server
         exec($this->options->getStartupCommand(), $out, $res);
 
         if (0 !== $res) {
-            if (getenv('BITCOINDSERVER_DEBUG_START')) {
+            if (getenv('GROESTLCOINDSERVER_DEBUG_START')) {
                 echo file_get_contents($this->options->getAbsoluteLogPath($this->config));
             }
-            throw new \RuntimeException("Failed to start bitcoind: {$this->options->getDataDir()}\n");
+            throw new \RuntimeException("Failed to start groestlcoind: {$this->options->getDataDir()}\n");
         }
 
         $tries = 3;
         do {
             if (!$this->isRunning()) {
                 if ($tries === 0) {
-                    if (getenv('BITCOINDSERVER_DEBUG_START')) {
+                    if (getenv('GROESTLCOINDSERVER_DEBUG_START')) {
                         echo file_get_contents($this->options->getAbsoluteLogPath($this->config));
                     }
                     throw new \RuntimeException("node didn't start");
@@ -140,7 +140,7 @@ class Server
     /**
      * @return Client
      * @throws ServerException
-     * @throws \BitWasp\Bitcoind\Exception\BitcoindException
+     * @throws \BitWasp\Groestlcoind\Exception\GroestlcoindException
      */
     public function getClient(DriverInterface $driver = null): Client
     {

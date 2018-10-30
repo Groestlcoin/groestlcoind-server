@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind\Node;
+namespace BitWasp\Test\Groestlcoind\Node;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Config\FilesystemLoader;
-use BitWasp\Bitcoind\Config\FilesystemWriter;
-use BitWasp\Bitcoind\Exception\ServerException;
-use BitWasp\Bitcoind\Node\NodeOptions;
-use BitWasp\Bitcoind\Node\Server;
-use BitWasp\Bitcoind\NodeService;
-use BitWasp\Test\Bitcoind\TestCase;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\FilesystemLoader;
+use BitWasp\Groestlcoind\Config\FilesystemWriter;
+use BitWasp\Groestlcoind\Exception\ServerException;
+use BitWasp\Groestlcoind\Node\NodeOptions;
+use BitWasp\Groestlcoind\Node\Server;
+use BitWasp\Groestlcoind\NodeService;
+use BitWasp\Test\Groestlcoind\TestCase;
 use Matomo\Ini\IniReader;
 use Nbobtc\Command\Command;
 
@@ -22,15 +22,15 @@ class ServerTest extends TestCase
         $this->expectException(ServerException::class);
         $this->expectExceptionMessage("Cannot create server without a valid datadir");
 
-        new Server(new NodeOptions("/usr/bin/bitcoind", "unknowndir"));
+        new Server(new NodeOptions("/usr/bin/groestlcoind", "unknowndir"));
     }
 
     public function testServerShouldBeRunningForClient()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("client-requires-server");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'regtest' => '1',
             'daemon' => '1',
@@ -49,10 +49,10 @@ class ServerTest extends TestCase
 
     public function testStartAndStop()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-start-stop");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'regtest' => '1',
             'daemon' => '1',
@@ -85,10 +85,10 @@ class ServerTest extends TestCase
 
     public function testStartRpcAndStop()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-start-stop-rpc");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'rpcuser' => 'u',
@@ -124,10 +124,10 @@ class ServerTest extends TestCase
 
     public function testNeedsToBeRunningForPid()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-not-running-no-pid");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'regtest' => '1',
@@ -148,10 +148,10 @@ class ServerTest extends TestCase
 
     public function testNeedsToBeRunningForShutdown()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-not-running-no-shutdown");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'regtest' => '1',

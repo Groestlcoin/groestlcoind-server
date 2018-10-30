@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Config;
+namespace BitWasp\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Exception\BitcoindException;
-use BitWasp\Bitcoind\Exception\ServerException;
+use BitWasp\Groestlcoind\Exception\GroestlcoindException;
+use BitWasp\Groestlcoind\Exception\ServerException;
 
 class Config
 {
@@ -20,7 +20,7 @@ class Config
     {
         foreach ($options as $key => $option) {
             if (!is_string($key)) {
-                throw new BitcoindException("Invalid config key");
+                throw new GroestlcoindException("Invalid config key");
             }
         }
 
@@ -67,11 +67,11 @@ class Config
     public function getDefaultRpcPort(): int
     {
         if ($this->isTestnet()) {
-            return 18332;
+            return 17766;
         } else if ($this->isRegtest()) {
             return 18443;
         } else {
-            return 8332;
+            return 1441;
         }
     }
 
@@ -81,7 +81,7 @@ class Config
         $port = (int) $this->get('rpcport', (string) $this->getDefaultRpcPort());
 
         if (!$this->hasRpcCredential()) {
-            throw new BitcoindException("Missing rpc credential fields");
+            throw new GroestlcoindException("Missing rpc credential fields");
         }
 
         $user = $this->get('rpcuser');
@@ -118,7 +118,7 @@ class Config
 
     public function getRelativePidPath(): string
     {
-        return $this->getPathInChainDir("bitcoind.pid");
+        return $this->getPathInChainDir("groestlcoind.pid");
     }
 
     public function getRelativeLogPath(): string

@@ -1,15 +1,15 @@
 <?php
 
-namespace BitWasp\Bitcoind\Utils;
+namespace BitWasp\Groestlcoind\Utils;
 
-use BitWasp\Bitcoind\Exception\BitcoindException;
+use BitWasp\Groestlcoind\Exception\GroestlcoindException;
 
 class File
 {
     public static function recursiveDelete(string $src)
     {
         if (!is_dir($src)) {
-            throw new BitcoindException("Parameter 1 for recursiveDelete should be a directory");
+            throw new GroestlcoindException("Parameter 1 for recursiveDelete should be a directory");
         }
 
         $dir = opendir($src);

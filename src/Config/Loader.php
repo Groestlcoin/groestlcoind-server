@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Config;
+namespace BitWasp\Groestlcoind\Config;
 
 abstract class Loader
 {

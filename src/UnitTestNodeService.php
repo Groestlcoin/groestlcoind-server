@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind;
+namespace BitWasp\Groestlcoind;
 
-use BitWasp\Bitcoind\Config;
-use BitWasp\Bitcoind\Exception\UnitTestException;
-use BitWasp\Bitcoind\Node\NodeOptions;
-use BitWasp\Bitcoind\Node\Server;
-use BitWasp\Bitcoind\Utils\File;
+use BitWasp\Groestlcoind\Config;
+use BitWasp\Groestlcoind\Exception\UnitTestException;
+use BitWasp\Groestlcoind\Node\NodeOptions;
+use BitWasp\Groestlcoind\Node\Server;
+use BitWasp\Groestlcoind\Utils\File;
 use Matomo\Ini\IniReader;
 
 class UnitTestNodeService
@@ -21,7 +21,7 @@ class UnitTestNodeService
     /**
      * @var string
      */
-    private $bitcoindPath;
+    private $groestlcoindPath;
 
     /**
      * @var NodeService
@@ -55,10 +55,10 @@ class UnitTestNodeService
 
     private $cleanupWhenFinished = true;
 
-    public function __construct(string $bitcoindPath, NodeService $nodeService, DataDirGeneratorInterface $dataDirGenerator = null)
+    public function __construct(string $groestlcoindPath, NodeService $nodeService, DataDirGeneratorInterface $dataDirGenerator = null)
     {
         $this->tmpDir = sys_get_temp_dir();
-        $this->bitcoindPath = $bitcoindPath;
+        $this->groestlcoindPath = $groestlcoindPath;
         $this->dataDirGenerator = $dataDirGenerator ?: new IncrementalDataDirGenerator($this->tmpDir);
         $this->service = $nodeService;
         $this->writer = new Config\FilesystemWriter();
@@ -129,7 +129,7 @@ class UnitTestNodeService
         $testId = count($this->nodeDirs);
         $dataDir = $this->dataDirGenerator->createNextDir();
         $config = $this->createRandomConfig($testId);
-        $options = new NodeOptions($this->bitcoindPath, $dataDir);
+        $options = new NodeOptions($this->groestlcoindPath, $dataDir);
 
         $node = $this->service->createNewNode($options, $config, $this->writer);
         $node->start($this->reader);

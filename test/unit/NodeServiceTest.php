@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind;
+namespace BitWasp\Test\Groestlcoind;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Config\FilesystemWriter;
-use BitWasp\Bitcoind\Config\Writer;
-use BitWasp\Bitcoind\Exception\SetupException;
-use BitWasp\Bitcoind\Node\NodeOptions;
-use BitWasp\Bitcoind\Node\Server;
-use BitWasp\Bitcoind\NodeService;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\FilesystemWriter;
+use BitWasp\Groestlcoind\Config\Writer;
+use BitWasp\Groestlcoind\Exception\SetupException;
+use BitWasp\Groestlcoind\Node\NodeOptions;
+use BitWasp\Groestlcoind\Node\Server;
+use BitWasp\Groestlcoind\NodeService;
 
 class NodeServiceTest extends TestCase
 {
     public function testCreateNewEnsureWritesToFile()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-createnew");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'regtest' => '1',
@@ -38,10 +38,10 @@ class NodeServiceTest extends TestCase
 
     public function testCreateNewWithFilesystem()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-createnew-real");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'regtest' => '1',
@@ -55,12 +55,12 @@ class NodeServiceTest extends TestCase
         $this->assertInstanceOf(Server::class, $node);
     }
 
-    public function testChecksBitcoindExists()
+    public function testChecksGroestlcoindExists()
     {
-        $bitcoind = "/some/invalid/path/bitcoind";
-        $dataDir = $this->registerTmpDir("datadir-check-bitcoind-exists");
+        $groestlcoind = "/some/invalid/path/groestlcoind";
+        $dataDir = $this->registerTmpDir("datadir-check-groestlcoind-exists");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'server' => '1',
@@ -69,18 +69,18 @@ class NodeServiceTest extends TestCase
 
         $service = new NodeService();
         $this->expectException(SetupException::class);
-        $this->expectExceptionMessage("Path to bitcoind executable is invalid");
+        $this->expectExceptionMessage("Path to groestlcoind executable is invalid");
 
         $service->createNewNode($options, $config, new FilesystemWriter());
     }
 
     public function testChecksDataDirNotExists()
     {
-        $bitcoind = $this->getBitcoindPath();
+        $groestlcoind = $this->getGroestlcoindPath();
         $dataDir = $this->registerTmpDir("datadir-check-datadir-not-exists");
         mkdir($dataDir);
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'server' => '1',
@@ -94,14 +94,14 @@ class NodeServiceTest extends TestCase
         $service->createNewNode($options, $config, new FilesystemWriter());
     }
 
-    public function testChecksBitcoindPathIsAnExecutable()
+    public function testChecksGroestlcoindPathIsAnExecutable()
     {
-        $bitcoind = $this->registerTmpFile("non-executable-bitcoind");
-        file_put_contents($bitcoind, "");
+        $groestlcoind = $this->registerTmpFile("non-executable-groestlcoind");
+        file_put_contents($groestlcoind, "");
 
-        $dataDir = $this->registerTmpDir("datadir-check-bitcoind-executable");
+        $dataDir = $this->registerTmpDir("datadir-check-groestlcoind-executable");
 
-        $options = new NodeOptions($bitcoind, $dataDir);
+        $options = new NodeOptions($groestlcoind, $dataDir);
         $config = new Config([
             'daemon' => '1',
             'server' => '1',
@@ -110,7 +110,7 @@ class NodeServiceTest extends TestCase
 
         $service = new NodeService();
         $this->expectException(SetupException::class);
-        $this->expectExceptionMessage("Bitcoind must be executable");
+        $this->expectExceptionMessage("Groestlcoind must be executable");
 
         $service->createNewNode($options, $config, new FilesystemWriter());
     }

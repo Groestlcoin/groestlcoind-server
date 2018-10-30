@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @license https://github.com/nbobtc/bitcoind-php/blob/2.x/LICENSE MIT
  */
 
-namespace BitWasp\Bitcoind\HttpDriver;
+namespace BitWasp\Groestlcoind\HttpDriver;
 
 use Nbobtc\Http\Driver\DriverInterface;
 use Psr\Http\Message\RequestInterface;

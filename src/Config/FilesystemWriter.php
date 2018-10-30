@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Config;
+namespace BitWasp\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Exception\BitcoindException;
+use BitWasp\Groestlcoind\Exception\GroestlcoindException;
 
 class FilesystemWriter extends Writer
 {
@@ -15,14 +15,14 @@ class FilesystemWriter extends Writer
             $file .= "{$key}={$option}\n";
         }
         if (!file_put_contents($filePath, $file)) {
-            throw new BitcoindException("Failed to write config file");
+            throw new GroestlcoindException("Failed to write config file");
         }
     }
 
     public function create(string $filePath, Config $config)
     {
         if (file_exists($filePath)) {
-            throw new BitcoindException("Cannot overwrite existing files with FilesystemWriter::create");
+            throw new GroestlcoindException("Cannot overwrite existing files with FilesystemWriter::create");
         }
 
         return $this->save($filePath, $config);

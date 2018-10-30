@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind;
+namespace BitWasp\Groestlcoind;
 
 interface DataDirGeneratorInterface
 {

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Node;
+namespace BitWasp\Groestlcoind\Node;
 
-use BitWasp\Bitcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\Config;
 
 class NodeOptions
 {
     /**
      * @var string
      */
-    private $configFileName = "bitcoin.conf";
+    private $configFileName = "groestlcoin.conf";
 
     /**
      * @var string
@@ -21,20 +21,20 @@ class NodeOptions
     /**
      * @var string
      */
-    private $bitcoind;
+    private $groestlcoind;
 
     /**
      * NodeOptions constructor.
-     * @param string $bitcoind - path to bitcoind executable
-     * @param string $dataDir - path to bitcoin datadir
+     * @param string $groestlcoind - path to groestlcoind executable
+     * @param string $dataDir - path to groestlcoin datadir
      */
-    public function __construct(string $bitcoind, string $dataDir)
+    public function __construct(string $groestlcoind, string $dataDir)
     {
         if (substr($dataDir, -1) !== "/") {
             $dataDir = "{$dataDir}/";
         }
 
-        $this->bitcoind = $bitcoind;
+        $this->groestlcoind = $groestlcoind;
         $this->dataDir = $dataDir;
     }
 
@@ -44,9 +44,9 @@ class NodeOptions
         return $this;
     }
 
-    public function getBitcoindPath(): string
+    public function getGroestlcoindPath(): string
     {
-        return $this->bitcoind;
+        return $this->groestlcoind;
     }
 
     public function getDataDir(): string
@@ -81,7 +81,7 @@ class NodeOptions
 
     public function getStartupCommand(): string
     {
-        return sprintf("%s -datadir=%s", $this->getBitcoindPath(), $this->getDataDir());
+        return sprintf("%s -datadir=%s", $this->getGroestlcoindPath(), $this->getDataDir());
     }
 
     public function hasConfig(): bool

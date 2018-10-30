@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind\Config;
+namespace BitWasp\Test\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Config\FilesystemLoader;
-use BitWasp\Bitcoind\Config\FilesystemWriter;
-use BitWasp\Test\Bitcoind\TestCase;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\FilesystemLoader;
+use BitWasp\Groestlcoind\Config\FilesystemWriter;
+use BitWasp\Test\Groestlcoind\TestCase;
 use Matomo\Ini\IniReader;
 
 class FilesystemTest extends TestCase

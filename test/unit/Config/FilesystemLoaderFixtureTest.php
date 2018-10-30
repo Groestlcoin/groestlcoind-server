@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind\Config;
+namespace BitWasp\Test\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Config\FilesystemLoader;
-use BitWasp\Test\Bitcoind\TestCase;
+use BitWasp\Groestlcoind\Config\FilesystemLoader;
+use BitWasp\Test\Groestlcoind\TestCase;
 use Matomo\Ini\IniReader;
 
 class FilesystemLoaderFixtureTest extends TestCase

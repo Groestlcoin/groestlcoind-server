@@ -1,15 +1,15 @@
 <?php
 
-namespace BitWasp\Test\Bitcoind;
+namespace BitWasp\Test\Groestlcoind;
 
-use BitWasp\Bitcoind\Utils\File;
+use BitWasp\Groestlcoind\Utils\File;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string
      */
-    private $bitcoind;
+    private $groestlcoind;
 
     /**
      * @var string[]
@@ -24,17 +24,17 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     public function __construct(string $name = null, array $data = [], string $dataName = '')
     {
         if (getenv('TRAVIS_BUILD_DIR')) {
-            $this->bitcoind = getenv('HOME') . "/bitcoin/bitcoin-" . getenv("BITCOIN_VERSION") . "/bin/bitcoind";
+            $this->groestlcoind = getenv('HOME') . "/groestlcoin/groestlcoin-" . getenv("GROESTLCOIN_VERSION") . "/bin/groestlcoind";
         } else {
-            if (!getenv('BITCOIND_PATH')) {
-                throw new \RuntimeException("Missing BITCOIND_PATH environment variable");
+            if (!getenv('GROESTLCOIND_PATH')) {
+                throw new \RuntimeException("Missing GROESTLCOIND_PATH environment variable");
             }
 
-            if (!is_executable(getenv('BITCOIND_PATH'))) {
-                throw new \RuntimeException("BITCOIND_PATH environment vairable should be an executable");
+            if (!is_executable(getenv('GROESTLCOIND_PATH'))) {
+                throw new \RuntimeException("GROESTLCOIND_PATH environment vairable should be an executable");
             }
 
-            $this->bitcoind = getenv('BITCOIND_PATH');
+            $this->groestlcoind = getenv('GROESTLCOIND_PATH');
         }
 
         parent::__construct($name, $data, $dataName);
@@ -106,8 +106,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $contents;
     }
 
-    public function getBitcoindPath()
+    public function getGroestlcoindPath()
     {
-        return $this->bitcoind;
+        return $this->groestlcoind;
     }
 }

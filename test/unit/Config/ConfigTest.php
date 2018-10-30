@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind\Config;
+namespace BitWasp\Test\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Exception\BitcoindException;
-use BitWasp\Bitcoind\Exception\ServerException;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Exception\GroestlcoindException;
+use BitWasp\Groestlcoind\Exception\ServerException;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase
@@ -48,7 +48,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->isRegtest());
         $this->assertEquals(8332, $config->getDefaultRpcPort());
         $this->assertEquals("", $config->getRelativeChainPath());
-        $this->assertEquals("bitcoind.pid", $config->getRelativePidPath());
+        $this->assertEquals("groestlcoind.pid", $config->getRelativePidPath());
 
         $config = new Config([
             'regtest' => 1,
@@ -58,7 +58,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->isRegtest());
         $this->assertEquals(18443, $config->getDefaultRpcPort());
         $this->assertEquals("regtest/", $config->getRelativeChainPath());
-        $this->assertEquals("regtest/bitcoind.pid", $config->getRelativePidPath());
+        $this->assertEquals("regtest/groestlcoind.pid", $config->getRelativePidPath());
 
         $config = new Config([
             'testnet' => 1,
@@ -68,7 +68,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->isRegtest());
         $this->assertEquals(18332, $config->getDefaultRpcPort());
         $this->assertEquals("testnet3/", $config->getRelativeChainPath());
-        $this->assertEquals("testnet3/bitcoind.pid", $config->getRelativePidPath());
+        $this->assertEquals("testnet3/groestlcoind.pid", $config->getRelativePidPath());
     }
 
     public function testNetworkConflict()
@@ -86,7 +86,7 @@ class ConfigTest extends TestCase
     {
         $config = new Config([]);
 
-        $this->expectException(BitcoindException::class);
+        $this->expectException(GroestlcoindException::class);
         $this->expectExceptionMessage("Missing rpc credential fields");
 
         $config->getRpcDsn();

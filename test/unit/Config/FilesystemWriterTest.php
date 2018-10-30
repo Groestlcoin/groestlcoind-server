@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Test\Bitcoind\Config;
+namespace BitWasp\Test\Groestlcoind\Config;
 
-use BitWasp\Bitcoind\Config\Config;
-use BitWasp\Bitcoind\Config\FilesystemWriter;
-use BitWasp\Bitcoind\Exception\BitcoindException;
-use BitWasp\Test\Bitcoind\TestCase;
+use BitWasp\Groestlcoind\Config\Config;
+use BitWasp\Groestlcoind\Config\FilesystemWriter;
+use BitWasp\Groestlcoind\Exception\GroestlcoindException;
+use BitWasp\Test\Groestlcoind\TestCase;
 
 class FilesystemWriterTest extends TestCase
 {
@@ -75,7 +75,7 @@ class FilesystemWriterTest extends TestCase
             'key' => 'value',
         ]);
 
-        $this->expectException(BitcoindException::class);
+        $this->expectException(GroestlcoindException::class);
         $this->expectExceptionMessage("Cannot overwrite existing files with FilesystemWriter::create");
 
         $this->writer->create($filename, $config);

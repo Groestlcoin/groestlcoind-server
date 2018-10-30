@@ -8,11 +8,11 @@ php:
 
 env:
     # The default env behaviour: phpunit, no coverage, no style checks
-  - PHPUNIT=true BITCOIN_VERSION="0.16.0" NBOBTC_VERSION="2.0.2"
+  - PHPUNIT=true GROESTLCOIN_VERSION="2.16.3" NBOBTC_VERSION="2.0.2"
 
 cache:
   directories:
-    ${HOME}/bitcoin
+    ${HOME}/groestlcoin
 
 matrix:
   fast_finish: true
@@ -20,32 +20,32 @@ matrix:
   exclude:
       # Disable phpunit test on 7.0, reenable with COVERAGE
     - php: 7.0
-      env: PHPUNIT=true BITCOIN_VERSION="0.16.0" NBOBTC_VERSION="2.0.2"
+      env: PHPUNIT=true GROESTLCOIN_VERSION="2.16.3" NBOBTC_VERSION="2.0.2"
 
   include:
       # This reenables php7.0/phpunit test with COVERAGE
     - php: 7.0
-      env: PHPUNIT=true BITCOIN_VERSION="0.16.0" COVERAGE=true CODESTYLE=true EXAMPLES=true
+      env: PHPUNIT=true GROESTLCOIN_VERSION="2.16.3" COVERAGE=true CODESTYLE=true EXAMPLES=true
 
       # 2.1.x
     - php: 7.2
-      env: PHPUNIT=true BITCOIN_VERSION="0.16.0" NBOBTC_VERSION="2.1.0"
+      env: PHPUNIT=true GROESTLCOIN_VERSION="2.16.3" NBOBTC_VERSION="2.1.0"
 
 sudo: false
 
 install:
     - |
-        if [ "$BITCOIN_VERSION" != "" ] && [ ! -e "${HOME}/bitcoin" ]; then
-            mkdir ${HOME}/bitcoin
+        if [ "$GROESTLCOIN_VERSION" != "" ] && [ ! -e "${HOME}/groestlcoin" ]; then
+            mkdir ${HOME}/groestlcoin
         fi
     - |
-        if [ "$BITCOIN_VERSION" != "" ] && [ ! -e "${HOME}/bitcoin/bitcoin-$BITCOIN_VERSION" ]; then
-            cd ${HOME}/bitcoin &&
-            wget https://bitcoin.org/bin/bitcoin-core-${BITCOIN_VERSION}/bitcoin-${BITCOIN_VERSION}-x86_64-linux-gnu.tar.gz &&
-            tar xvf bitcoin-${BITCOIN_VERSION}-x86_64-linux-gnu.tar.gz &&
+        if [ "$GROESTLCOIN_VERSION" != "" ] && [ ! -e "${HOME}/groestlcoin/groestlcoin-$GROESTLCOIN_VERSION" ]; then
+            cd ${HOME}/groestlcoin &&
+            wget https://github.com/Groestlcoin/groestlcoin/releases/download/v2.16.3/groestlcoin-${GROESTLCOIN_VERSION}-x86_64-linux-gnu.tar.gz &&
+            tar xvf groestlcoin-${GROESTLCOIN_VERSION}-x86_64-linux-gnu.tar.gz &&
             cd ${TRAVIS_BUILD_DIR}
         else
-            echo "Had bitcoind"
+            echo "Had groestlcoind"
         fi
 
 before_script:
@@ -54,7 +54,7 @@ before_script:
     - if [ "${COVERAGE}" != "true" ] && [ "${TRAVIS_PHP_VERSION}" != "nightly" ]; then phpenv config-rm xdebug.ini && echo "xdebug disabled"; fi
 
 script:
-    - if [ "${PHPUNIT}" = "true" ]; then BITCOINDSERVER_DEBUG_START=true make phpunit-ci; fi
+    - if [ "${PHPUNIT}" = "true" ]; then GROESTLCOINDSERVER_DEBUG_START=true make phpunit-ci; fi
     - if [ "${CODESTYLE}" = "true" ]; then make phpcs && echo "PHPCS OK"; fi
 
 after_success:

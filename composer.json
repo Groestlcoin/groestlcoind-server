@@ -1,8 +1,8 @@
 {
-  "name": "bitwasp/bitcoind-server",
-  "description": "A helper library for spawning bitcoind regtest nodes for unit tests",
-  "keywords": ["unit test", "bitcoin", "daemon", "regtest"],
-  "homepage": "https://github.com/bit-wasp/bitcoind-server",
+  "name": "bitwasp/groestlcoind-server",
+  "description": "A helper library for spawning groestlcoind regtest nodes for unit tests",
+  "keywords": ["unit test", "groestlcoin", "daemon", "regtest"],
+  "homepage": "https://github.com/groestlcoin/groestlcoind-server",
   "license": "MIT",
   "require": {
     "nbobtc/bitcoind-php": "^2.0.2",
@@ -14,12 +14,12 @@
   },
   "autoload": {
     "psr-4": {
-      "BitWasp\\Bitcoind\\": "src/"
+      "BitWasp\\Groestlcoind\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BitWasp\\Test\\Bitcoind\\": "test/unit/"
+      "BitWasp\\Test\\Groestlcoind\\": "test/unit/"
     }
   }
 }

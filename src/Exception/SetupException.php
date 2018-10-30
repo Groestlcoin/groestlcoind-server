@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitWasp\Bitcoind\Exception;
+namespace BitWasp\Groestlcoind\Exception;
 
-class SetupException extends BitcoindException
+class SetupException extends GroestlcoindException
 {
 
 }
